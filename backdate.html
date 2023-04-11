@@ -3,7 +3,7 @@
   <head>
     <meta
       property="article:published_time"
-      content="2022-01-01T12:00:00.000Z"
+      content="2021-12-12T12:11:26.000Z"
     />
   </head>
 
@@ -11,56 +11,200 @@
     <main>
       <article>
         <section>
-          <div class="pw-post-title">
-            <h1>Slack Notification</h1>
-          </div>
-          <!-- <p class="pw-post-body-paragraph">
-            <i
-              >This post will walk you through how to use slack as a monitoring
-              and alerting tool.
-            </i>
-          </p> -->
-          <p class="pw-post-body-paragraph">
-            Slack is a messaging app for business that connects people to the
-            information they need. These days most companies rely heavly on
-            slack for all round communication and notifcation. Nest js is a
-            progressive Node.js framework for building efficient, reliable and
-            scalable server-side applications. Angular 2+ will find Nest js much
-            easier to grabs as it has exactly the programming patterns(OOP ,
-            dependecy injections, e.t.c.). We are not here to talk about Nest js
-            but it so comfortable and easy to learn(Documentation is perfect!!!)
-          </p>
-          <p class="pw-post-body-paragraph">
-            In this article, I will be showing how you can use slack as a
-            monitoring & alerting tool.Be aware there are so many monitoring
-            tools out there which can as well been integrated to slack via
-            Zapier. I won't be diving into that in this article. The main goal
-            of this article is to communicate directly with slack API and get
-            notified. We will sending slack notifications on every error.
-          </p>
+          In this digital age, keeping up with notifications is becoming increasingly difficult, especially when using platforms like Slack for communication and collaboration. If you've found yourself in a similar situation, struggling to stay on top of your Slack notifications, this article is tailor-made for you. We'll explore how you can integrate Slack notifications into your Next.js application, streamlining your workflow and enhancing your overall productivity. 
 
-          <h2>Requirements</h2>
-          <ul>
-            <li>Knowlege of Nest Js</li>
-            <li>Slack Workspace</li>
-          </ul>
+Next.js, a powerful and versatile React framework, offers the essential building blocks for creating dynamic web applications. In this guide, we'll demonstrate how to harness the capabilities of Next.js to bring Slack notifications right into your mobile application, transforming it into a temporary monitoring and alerting tool with minimal coding effort.
 
-          <h4>Steps</h4>
+So, buckle up and get ready for an engaging and informative journey as we delve into the world of Slack notifications and Next.js integration. By the end of this article, you'll be equipped with the knowledge and confidence to enhance your applications and take control of your Slack notifications like never before.
+Slack Notifications Use Cases
+There are many applications for slack notifications in real word cases. Here are a few:
+Slack notifications can be used for Success notifications.
+Slack notifications can be used when a new business signs up on your application.
+Slack notifications can be used when a new business uploads its KYC.
+Slack notifications can be used generally for notifications.
+Slack notifications are one of the easiest ways to get notified for smaller teams.
 
-          <h4>2. Add Slack App</h4>
+Prerequisites
+Before following this tutorial, you will need a few things:
+Next.js
+Axios library
+Setting Up Slack 
+To send notifications to slack you will need to create a slack application and configure incoming webhooks to the channel concerned. To achieve this follow the steps below:
+Have a slack account or be added to a team. You can create a slack account here.
+Go to slack api website https://api.slack.com/
 
-          <p class="pw-post-body-paragraph">
-            This step requires admistrator privileges in the workspace for this
-            step. We will adding Incoming Webhooks.
-          </p>
 
-          <p>
-            Even though this is not a replacement for all those fancy monitoring
-            tools, a lot can be achieved with this either to your own good or
-            for the business side. There is nothing more satisfying to have a
-            live feed of orders on your screen and watching them coming in so
-            fast you can barely keep up with the scrolling
-          </p>
+
+Make sure you are logged in then click on “Your apps”
+On the app's dashboard, create a new app and select “from scratch”
+
+Enter a name for your app, select the slack workspace you want to send notifications to and click on create an app.
+
+Now that you have created your app you should be redirected to a page with all the information you need to use it.
+On the left navigation panel, click “Incoming webhooks”.
+On the “incoming webhooks” page, toggle on the Activate incoming webhooks button.
+
+Scroll down and click on “Add new webhook to webspace”.
+
+Pick a channel to add the webhook to and click on allow
+
+You should now have a webhook created in that channel, copy the webhook URL which we will be using in our next app.
+
+
+Building The Next Applications
+To create a Next.js application that sends notifications to a Slack channel using webhooks, follow the steps below:
+Install and set up a new Next.js application:
+```
+npx create-next-app slack-notification-app cd slack-notification-app
+```
+Install the Axios package for making HTTP requests
+
+```
+npm install axios
+```
+Create a .env.local file in the root of your project to store the Slack webhook URL securely:
+```
+SLACK_WEBHOOK_URL=https://hooks.slack.com/services/your/webhook/URL
+```
+Remember to replace the URL with your actual webhook URL, which can be obtained by creating a new Incoming Webhook in your Slack app.
+Add the following code to your next.config.js file to expose the Slack webhook URL to your application:
+```
+module.exports = {
+    env: {
+        SLACK_WEBHOOK_URL: process.env.SLACK_WEBHOOK_URL,
+    },
+};
+```
+Create a helper function to send a message to Slack:
+Create a new file called lib/slack.js and add the following code:
+```
+import axios from 'axios';
+export async function sendMessageToSlack(text) {
+  const webhookURL = process.env.SLACK_WEBHOOK_URL;
+  const payload = { text };
+  try {
+    const response = await axios.post(webhookURL, payload);
+    return response.status === 200;
+  } catch (error) {
+    console.error('Error sending message to Slack:', error);
+    return false;
+  }
+}
+```
+
+Create a Next.js API route to send notifications:
+
+Create a new file called pages/api/send-notification.js and add the following code:
+```
+import { sendMessageToSlack } from '../../lib/slack';
+export default async function handler(req, res) {
+  if (req.method === 'POST') {
+    const { message } = req.body;
+    const result = await sendMessageToSlack(message);
+    if (result) {
+      res.status(200).json({ status: 'success', message: 'Notification sent' });
+    } else {
+      res.status(500).json({ status: 'error', message: 'Failed to send notification' });
+    }
+  } else {
+    res.status(405).json({ status: 'error', message: 'Method not allowed' });
+  }
+}
+```
+Modify the pages/index.js file to include a form to send notifications:
+Replace the content of the pages/index.js file with the following code:
+```
+import { useState } from 'react';
+import axios from 'axios';
+export default function Home() {
+  const [message, setMessage] = useState('');
+  const [status, setStatus] = useState('');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await axios.post('/api/send-notification', { message });
+    setStatus(response.data.status);
+  };
+  return (
+    <div>
+      <h1>Send a notification to Slack</h1>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Message:
+          <input
+            type="text"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          />
+        </label>
+        <button type="submit">Send</button>
+      </form>
+      {status && <p>Status: {status}</p>}
+    </div>
+  );
+}
+```
+Run the application:
+```
+npm run dev
+```
+Now, visit  http://localhost:3000 to view your result.
+
+
+
+Send a message using our next application. You should receive a notification on slack in the channel you picked.
+
+
+
+Adding exception filters
+ An exception filter is like a pipeline that helps to handle all errors in your code base from your application. Every error that’s encountered will go through the exception filter and will be handled however you like.
+We are using an exception filter because we are using it to send error notifications and all errors will pass through the exception filter.
+
+To add an error exception filter to your code follow the steps below:
+
+Create a new function `sendMessageToSlack` and add the following code to it:
+
+```
+const sendMessageToSlack = async (msg) => {
+    try {
+      await axios.post('/api/send-notification', 
+      { message: msg }).then((res) => {
+        setStatus(res.data.status);
+      });
+    } catch (error) {
+      setStatus(error.message);
+      sendErrorToSlack(error.message)
+    }
+  }
+
+```
+This function will handle the request to the slack api to send our message notifications. To handle all error exceptions while calling the slack api, we wrapped our function with a `try-catch` filter. This ensures that when there is an error we can catch it and send it to slack.
+Create another function to send only error messages to slack using the code below:
+```
+const sendErrorToSlack = async (err) => {
+    await axios.post('/api/send-notification', 
+      { message: err });
+  }
+
+```
+Finally, modify your `handleSubmit` function to call your `sendMessageToSlack` function and pass the message to it as in the code below:
+```
+  const handleSubmit = (e) => {
+    e.preventDefault();
+      sendMessageToSlack(message)
+  };
+
+```
+Now, whenever  there’s an error while making a request to the slack api endpoint it will be sent to slack.
+For example, supposing I don’t enter any message to be sent in the text input of our Next app, the error message will be sent to slack.
+
+
+
+
+Conclusion 
+In this article, we implemented slack notifications for our Next application and How to add exception filters to the code case. We saw the general use of slack notifications.
+
+Note that Slack integration is just one of the numerous ways you can use to handle monitoring and alerting and you can use other applications like sentry which are more advanced, AWS cloud watch but slack integration is the easiest for a smaller team to monitor and alert when there are issues or to get notifications on their slack.
+
         </section>
       </article>
     </main>
