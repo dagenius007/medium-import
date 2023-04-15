@@ -11,199 +11,27 @@
     <main>
       <article>
         <section>
-          In this digital age, keeping up with notifications is becoming increasingly difficult, especially when using platforms like Slack for communication and collaboration. If you've found yourself in a similar situation, struggling to stay on top of your Slack notifications, this article is tailor-made for you. We'll explore how you can integrate Slack notifications into your Next.js application, streamlining your workflow and enhancing your overall productivity. 
+          Making The Dev To Team Lead Transition: How We Built Kwiksell
+When Ray Liotta said, “As far back as I can remember, I always wanted to be a gangster,” I felt seen. Not that I wanted to be a gangster (Have you met me?!), but I know what it is to have a dream and then live it. This was the case for me in August 2019, when I joined Softcom. It was also my second year as a full-time frontend developer—two years of being a tech bro—and my first stint in a firm that size.
+By 2021, I had worked on TixHut, Leap, GS3, and Eyowo. It was a learning curve that was about to throw me into the deep: leading a team to develop a product. The transition from dev to lead is not an easy one. It is a mental shift that gives your imposter syndrome the energy boost it really does not deserve. Do not get me wrong, it was just as exciting as it was scary.
+Becoming A Team Lead
+With 3 years as a frontend dev, a stack containing React and Redux majorly, the Softcom CEO decided I was ready to lead a team. I do not know what he saw, but I would like to believe it was the product of hard work, grit, availability, and just sheer refusal to let my village people win.
+I was to lead a team of 5: 3 frontend engineers, 2 backend engineers, and one QA. This immediately increased to nine after 4 engineers joined the team to ensure we had an MVP in the stated timeframe. The first course of business was evaluating my team’s strengths. I had to be sure of what can be done, who can do it, and how long it will take each person to get it done. I also had to know what work-life boundaries my team was open to pushing back. This was key as we had a six-month mandate that might require after-work meetings, working weekends, impromptu sync-ups; a general obsfucation of the line between work and non-work.
+At this point, I have to give a big shout-out to the team—Anisat Yunusa, Victor Aremu, Oladotun Sobande, Ire Olaniyan, Adaeze Atusiuba, Tamunobelema Miebaka-Ogan, Richard Akinyemi, Stanley  Ndunwere, Samuel Dalafiari, Simi Da-Walang, Fatimah Abdulrahman—for their perseverance, for trusting me to lead, and for going well above the call of duty when the need arose.
+The next step for me was breaking the PM’s roadmap into chunks for the team. I knew I would have to lead by doing and by ensuring no one was slacking. I had to mentally move from a Kevin Durant mentality and buy heavily into the LeBron James mindset; I could no longer just play ball, I had to facilitate too.
+With these done, it was time to start building Kwiksell.
+Building Kwiksell
+Kwiksell is a business growth tool to aid sales. It is an e-commerce product with over 1,000 merchants make sales, create invoices and reports, collect payments, and share and update their inventory. It has a global setting, teams, and a kitchen display system for restaurants. However, its first market-ready iteration, which my team worked on, had fewer modules than it does now.  At the time, our main goal was creating a Square for the Nigerian market. Our primary modules were the Items(Inventory), Make A Sale, Teams, Roles and Permissions, Reports module, Sales channel and Orders modules, adding functionalities that the market leader at the time did not provide. 
+Work began in earnest in November, 2021 with the backend engineers creating APIs based on the designs provided by the design team, while the frontend engineers converted the designs. This was followed by the consumption of the APIs created by the backend team. Straightforward, right? Nah. 
+We got in rhythm with the new and, like all devs around the world, kept it moving till the first of two major blockers. Things started going sideways three months in when work started on the inventory module. The first was Victor, a frontend engineer, leaving the team to go write his final exams at the Lagos State University. Thereafter, shorthanded as we were, there was a miscommunication, mostly on my part, that led to us having to re-factor the implementation of the items(inventory) module. This meant almost restarting work to ensure the variant items, parent items, pricing, and more were user-ready and compliant with the documentation. So, I gathered the team, informed them, let them know what was okay and what needed reworking, thereby giving the team the chance to retrace our steps and know where to fix. I also apologised as this error was going to make meeting the deadline harder than it already was–took on backend tasks alongside my frontend tasks–and finished in 4-5 days. We refactored a module that took us 3 weeks to finish in 4-5 days of noodles- and soda-fueled all-nighters. Then we pushed to QA for testing. It passed.
+The second is the usually no-so-tricky payment integration. It usually is the easy ones that manage to become complicated. This blocker had to be navigated carefully as it was outside my team but was still an in-house issue. Kwiksell's payment structure was powered by Eyowo, which at the time was undergoing major upgrades, re-engineering, and scaling, making integration difficult. With time, several “can you jump on a quick call?” and a few physical meetings, we got this solved. 
+In August 2021, we provided an MVP-viable product to plenty (virtual) back pats, sighs of relief, and a mental switch ahead of the next project.
+Takeaways From Building Kwiksell
+Leading a team is about trust and (copious!) patience. It is also about meetings, communication, and updates. Ezekiel, I love you, but I wish you let the 10-minute standups be so. Not an hour. In your defence, you used the time to also know how we are.
+Leading is also knowing the buck stops at your door. This means you must be on top of things, catch slacks before they become issues, and as best as you can, shield your team. 
+Team bonding is a very important component of team success. We had knowledge sessions every Friday, led by pre-selected members of the team. These sessions were an avenue to teach, discuss, crack jokes, and stay on point. It is also important for engineering processes to be set and duly followed. This comes in handy when upper management starts asking how things are and as the deadline looms closer. If there is no structure, you create an opening for people trying to cut corners, be less detailed, and for those damnable bugs to sneak through.
+Get it right the first time. It saves more time than hoping to catch it later. You won't be the one to catch it. Your boss will. During the general meeting. As the client listens in.  
 
-Next.js, a powerful and versatile React framework, offers the essential building blocks for creating dynamic web applications. In this guide, we'll demonstrate how to harness the capabilities of Next.js to bring Slack notifications right into your mobile application, transforming it into a temporary monitoring and alerting tool with minimal coding effort.
-
-So, buckle up and get ready for an engaging and informative journey as we delve into the world of Slack notifications and Next.js integration. By the end of this article, you'll be equipped with the knowledge and confidence to enhance your applications and take control of your Slack notifications like never before.
-Slack Notifications Use Cases
-There are many applications for slack notifications in real word cases. Here are a few:
-Slack notifications can be used for Success notifications.
-Slack notifications can be used when a new business signs up on your application.
-Slack notifications can be used when a new business uploads its KYC.
-Slack notifications can be used generally for notifications.
-Slack notifications are one of the easiest ways to get notified for smaller teams.
-
-Prerequisites
-Before following this tutorial, you will need a few things:
-Next.js
-Axios library
-Setting Up Slack 
-To send notifications to slack you will need to create a slack application and configure incoming webhooks to the channel concerned. To achieve this follow the steps below:
-Have a slack account or be added to a team. You can create a slack account here.
-Go to slack api website https://api.slack.com/
-
-
-
-Make sure you are logged in then click on “Your apps”
-On the app's dashboard, create a new app and select “from scratch”
-
-Enter a name for your app, select the slack workspace you want to send notifications to and click on create an app.
-
-Now that you have created your app you should be redirected to a page with all the information you need to use it.
-On the left navigation panel, click “Incoming webhooks”.
-On the “incoming webhooks” page, toggle on the Activate incoming webhooks button.
-
-Scroll down and click on “Add new webhook to webspace”.
-
-Pick a channel to add the webhook to and click on allow
-
-You should now have a webhook created in that channel, copy the webhook URL which we will be using in our next app.
-
-
-Building The Next Applications
-To create a Next.js application that sends notifications to a Slack channel using webhooks, follow the steps below:
-Install and set up a new Next.js application:
-```
-npx create-next-app slack-notification-app cd slack-notification-app
-```
-Install the Axios package for making HTTP requests
-
-```
-npm install axios
-```
-Create a .env.local file in the root of your project to store the Slack webhook URL securely:
-```
-SLACK_WEBHOOK_URL=https://hooks.slack.com/services/your/webhook/URL
-```
-Remember to replace the URL with your actual webhook URL, which can be obtained by creating a new Incoming Webhook in your Slack app.
-Add the following code to your next.config.js file to expose the Slack webhook URL to your application:
-```
-module.exports = {
-    env: {
-        SLACK_WEBHOOK_URL: process.env.SLACK_WEBHOOK_URL,
-    },
-};
-```
-Create a helper function to send a message to Slack:
-Create a new file called lib/slack.js and add the following code:
-```
-import axios from 'axios';
-export async function sendMessageToSlack(text) {
-  const webhookURL = process.env.SLACK_WEBHOOK_URL;
-  const payload = { text };
-  try {
-    const response = await axios.post(webhookURL, payload);
-    return response.status === 200;
-  } catch (error) {
-    console.error('Error sending message to Slack:', error);
-    return false;
-  }
-}
-```
-
-Create a Next.js API route to send notifications:
-
-Create a new file called pages/api/send-notification.js and add the following code:
-```
-import { sendMessageToSlack } from '../../lib/slack';
-export default async function handler(req, res) {
-  if (req.method === 'POST') {
-    const { message } = req.body;
-    const result = await sendMessageToSlack(message);
-    if (result) {
-      res.status(200).json({ status: 'success', message: 'Notification sent' });
-    } else {
-      res.status(500).json({ status: 'error', message: 'Failed to send notification' });
-    }
-  } else {
-    res.status(405).json({ status: 'error', message: 'Method not allowed' });
-  }
-}
-```
-Modify the pages/index.js file to include a form to send notifications:
-Replace the content of the pages/index.js file with the following code:
-```
-import { useState } from 'react';
-import axios from 'axios';
-export default function Home() {
-  const [message, setMessage] = useState('');
-  const [status, setStatus] = useState('');
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const response = await axios.post('/api/send-notification', { message });
-    setStatus(response.data.status);
-  };
-  return (
-    <div>
-      <h1>Send a notification to Slack</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Message:
-          <input
-            type="text"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-          />
-        </label>
-        <button type="submit">Send</button>
-      </form>
-      {status && <p>Status: {status}</p>}
-    </div>
-  );
-}
-```
-Run the application:
-```
-npm run dev
-```
-Now, visit  http://localhost:3000 to view your result.
-
-
-
-Send a message using our next application. You should receive a notification on slack in the channel you picked.
-
-
-
-Adding exception filters
- An exception filter is like a pipeline that helps to handle all errors in your code base from your application. Every error that’s encountered will go through the exception filter and will be handled however you like.
-We are using an exception filter because we are using it to send error notifications and all errors will pass through the exception filter.
-
-To add an error exception filter to your code follow the steps below:
-
-Create a new function `sendMessageToSlack` and add the following code to it:
-
-```
-const sendMessageToSlack = async (msg) => {
-    try {
-      await axios.post('/api/send-notification', 
-      { message: msg }).then((res) => {
-        setStatus(res.data.status);
-      });
-    } catch (error) {
-      setStatus(error.message);
-      sendErrorToSlack(error.message)
-    }
-  }
-
-```
-This function will handle the request to the slack api to send our message notifications. To handle all error exceptions while calling the slack api, we wrapped our function with a `try-catch` filter. This ensures that when there is an error we can catch it and send it to slack.
-Create another function to send only error messages to slack using the code below:
-```
-const sendErrorToSlack = async (err) => {
-    await axios.post('/api/send-notification', 
-      { message: err });
-  }
-
-```
-Finally, modify your `handleSubmit` function to call your `sendMessageToSlack` function and pass the message to it as in the code below:
-```
-  const handleSubmit = (e) => {
-    e.preventDefault();
-      sendMessageToSlack(message)
-  };
-
-```
-Now, whenever  there’s an error while making a request to the slack api endpoint it will be sent to slack.
-For example, supposing I don’t enter any message to be sent in the text input of our Next app, the error message will be sent to slack.
-
-
-
-
-Conclusion 
-In this article, we implemented slack notifications for our Next application and How to add exception filters to the code case. We saw the general use of slack notifications.
-
-Note that Slack integration is just one of the numerous ways you can use to handle monitoring and alerting and you can use other applications like sentry which are more advanced, AWS cloud watch but slack integration is the easiest for a smaller team to monitor and alert when there are issues or to get notifications on their slack.
 
         </section>
       </article>
